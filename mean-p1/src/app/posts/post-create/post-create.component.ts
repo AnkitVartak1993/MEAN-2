@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Button } from 'protractor';
 
 @Component({
@@ -8,11 +8,17 @@ import { Button } from 'protractor';
 
 })
 export class PostCreateComponent {
-  enteredValue = '';
+  enteredContent = '';
+  enteredTitle = '';
+  @Output() postCreated = new EventEmitter();
   newPost = 'No content';
 
   onAddPost() {
+    const post = {
+      title: this.enteredTitle,
+      content: this.enteredContent
+    };
+    this.postCreated.emit(post);
     console.log('Added');
-    this.newPost = this.enteredValue;
   }
 }
