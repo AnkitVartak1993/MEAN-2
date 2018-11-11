@@ -41,13 +41,19 @@ app.post('/api/posts', (req, res, next) => {
 });
 
 app.get('/api/posts', (req, res, next) => {
-  const posts = [
-    {title:'node',content:'node data', id: 'asdfghj'},
-    {title:'node2',content:'node data2', id: 'hgfdsa'},
-  ];
-  res.status(200).json({
-    message: 'Success on send',
-    posts: posts
+  Post.find().then(documents => {
+    console.log(documents);
+    res.status(200).json({
+      message: 'Success on send',
+      posts: documents
+    });
+  });
+});
+
+app.delete('/api/posts/:id', (req, res, next) => {
+  Post.deleteOne({_id: req.params.id}).then(result => {
+    console.log(result);
+    res.status(200).json({message:'The record is deleted'});
   });
 });
 module.exports = app;
